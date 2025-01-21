@@ -1,66 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Casino Games</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casino Games</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <header>
     <h1>Casino Games</h1>
-    <div id="app">
-        <div class="balance">
-            Balance: <span id="balance">10000</span> ALSilver
-        </div>
-
-        <!-- Blackjack -->
-        <h2>Blackjack</h2>
-        <div class="form-group">
-            <input type="number" id="blackjackBet" placeholder="Bet Amount (2,000 - 500,000)">
-            <button onclick="playBlackjack()">Play Blackjack</button>
-        </div>
-        <div class="blackjack-table">
-            <div>
-                <h3>Player's Cards</h3>
-                <div id="player-cards" class="cards"></div>
-                <p id="player-score"></p>
-            </div>
-            <div>
-                <h3>Dealer's Cards</h3>
-                <div id="dealer-cards" class="cards"></div>
-                <p id="dealer-score"></p>
-            </div>
-        </div>
-        <div id="blackjack-result"></div>
-
-        <!-- Slots -->
-        <h2>Slots</h2>
-        <div class="form-group">
-            <input type="number" id="slotBet" placeholder="Bet Amount (2,000 - 500,000)">
-            <button onclick="playSlots()">Spin Slots</button>
-        </div>
-        <div class="slot-machine">
-            <div id="slot-reels">
-                <span class="slot-reel">🍒</span>
-                <span class="slot-reel">🍋</span>
-                <span class="slot-reel">🔔</span>
-            </div>
-        </div>
-        <div id="slot-result"></div>
-
-        <!-- Apply for ALSilver -->
-        <h2>Request More ALSilver</h2>
-        <div class="form-group">
-            <input type="number" id="applyAmount" placeholder="Amount to Request">
-            <button onclick="applyForSilver()">Apply</button>
-        </div>
-        <p id="application-status"></p>
-    </div>
-
-    <footer>
-        <p>Copyright © 2025 Casino Games. All rights reserved.</p>
-    </footer>
-
-    <script src="script.js"></script>
+    <nav>
+      <a href="blackjack.html">Blackjack</a>
+      <a href="slots.html">Slots</a>
+      <a href="admin.html">Admin Panel</a>
+    </nav>
+  </header>
+  <main>
+    <h2>Welcome to the Casino!</h2>
+    <p>Choose a game or visit the admin panel.</p>
+  </main>
 </body>
 </html>
