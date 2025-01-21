@@ -1,97 +1,189 @@
-let balance = 10000;
-const requests = [];
+// Shared Variables
+let balance = 0; // Player starts with 0 ALSilver
+let pendingRequests = [];
 
-// Update Balance
+// Update Balance on All Pages
 function updateBalanceDisplay() {
-    document.getElementById("balance").textContent = balance;
+  const balanceElements = document.querySelectorAll("#balance, #slots-balance");
+  balanceElements.forEach((el) => (el.textContent = balance));
 }
 
 // Blackjack Logic
-function playBlackjack() {
-    const bet = parseInt(document.getElementById("blackjackBet").value);
-    if (!validateBet(bet)) return;
+if (document.getElementById("blackjack")) {
+  const startBtn = document.getElementById("start-blackjack");
+  const hitBtn = document.getElementById("hit");
+  const standBtn = document.getElementById("stand");
+  const playerCardsDiv = document.getElementById("player-cards");
+  const dealerCardsDiv = document.getElementById("dealer-cards");
+  const playerScoreSpan = document.getElementById("player-score");
+  const dealerScoreSpan = document.getElementById("dealer-score");
+  const resultMessage = document.getElementById("result-message");
 
-    balance -= bet;
-    updateBalanceDisplay();
+  let playerCards = [];
+  let dealerCards = [];
+  let playerScore = 0;
+  let dealerScore = 0;
 
-    const playerCards = [getCard(), getCard()];
-    const dealerCards = [getCard(), getCard()];
+  function dealCard() {
+    const cardValue = Math.floor(Math.random() * 10) + 1; // Random card between 1 and 10
+    const cardDiv = document.createElement("div");
+    cardDiv.textContent = cardValue;
+    cardDiv.className = "card";
+    return { value: cardValue, cardDiv };
+  }
 
-    renderCards(playerCards, "player-cards");
-    renderCards(dealerCards, "dealer-cards");
+  function calculateScore(cards) {
+    return cards.reduce((sum, card) => sum + card.value, 0);
+  }
 
-    const playerScore = calculateScore(playerCards);
-    const dealerScore = calculateScore(dealerCards);
+  function resetGame() {
+    playerCards = [];
+    dealerCards = [];
+    playerScore = 0;
+    dealerScore = 0;
+    playerCardsDiv.innerHTML = "";
+    dealerCardsDiv.innerHTML = "";
+    playerScoreSpan.textContent = "";
+    dealerScoreSpan.textContent = "";
+    resultMessage.textContent = "";
+  }
 
-    document.getElementById("player-score").textContent = `Player's Score: ${playerScore}`;
-    document.getElementById("dealer-score").textContent = `Dealer's Score: ${dealerScore}`;
-
-    if (playerScore > 21 || (dealerScore <= 21 && dealerScore >= playerScore)) {
-        alert("You lose!");
-    } else {
-        balance += bet * 2;
-        updateBalanceDisplay();
-        alert("You win!");
+  startBtn.addEventListener("click", () => {
+    const betAmount = parseInt(document.getElementById("bet-amount").value, 10);
+    if (betAmount < 2000 || betAmount > 500000 || isNaN(betAmount)) {
+      alert("Bet amount must be between 2000 and 500000 ALSilver.");
+      return;
     }
+    if (balance < betAmount) {
+      alert("You don't have enough ALSilver to place this bet.");
+      return;
+    }
+
+    balance -= betAmount;
+    updateBalanceDisplay();
+    resetGame();
+
+    // Deal initial cards
+    for (let i = 0; i < 2; i++) {
+      const playerCard = dealCard();
+      const dealerCard = dealCard();
+      playerCards.push(playerCard);
+      dealerCards.push(dealerCard);
+      playerCardsDiv.appendChild(playerCard.cardDiv);
+      dealerCardsDiv.appendChild(dealerCard.cardDiv);
+    }
+
+    playerScore = calculateScore(playerCards);
+    dealerScore = calculateScore(dealerCards);
+
+    playerScoreSpan.textContent = playerScore;
+    dealerScoreSpan.textContent = dealerScore;
+
+    document.getElementById("game-area").style.display = "block";
+
+    if (playerScore === 21) {
+      resultMessage.textContent = "Blackjack! You win!";
+      balance += betAmount * 2.5;
+      updateBalanceDisplay();
+    }
+  });
+
+  hitBtn.addEventListener("click", () => {
+    const playerCard = dealCard();
+    playerCards.push(playerCard);
+    playerCardsDiv.appendChild(playerCard.cardDiv);
+    playerScore = calculateScore(playerCards);
+    playerScoreSpan.textContent = playerScore;
+
+    if (playerScore > 21) {
+      resultMessage.textContent = "Bust! You lose.";
+      document.getElementById("game-area").style.display = "none";
+    }
+  });
+
+  standBtn.addEventListener("click", () => {
+    while (dealerScore < 17) {
+      const dealerCard = dealCard();
+      dealerCards.push(dealerCard);
+      dealerCardsDiv.appendChild(dealerCard.cardDiv);
+      dealerScore = calculateScore(dealerCards);
+      dealerScoreSpan.textContent = dealerScore;
+    }
+
+    if (dealerScore > 21 || playerScore > dealerScore) {
+      resultMessage.textContent = "You win!";
+      balance += parseInt(document.getElementById("bet-amount").value, 10) * 2;
+    } else if (playerScore < dealerScore) {
+      resultMessage.textContent = "You lose.";
+    } else {
+      resultMessage.textContent = "It's a tie.";
+      balance += parseInt(document.getElementById("bet-amount").value, 10);
+    }
+    updateBalanceDisplay();
+    document.getElementById("game-area").style.display = "none";
+  });
 }
 
 // Slots Logic
-function playSlots() {
-    const bet = parseInt(document.getElementById("slotBet").value);
-    if (!validateBet(bet)) return;
+if (document.getElementById("slots")) {
+  const spinBtn = document.getElementById("spin-slots");
+  const slot1 = document.getElementById("slot1");
+  const slot2 = document.getElementById("slot2");
+  const slot3 = document.getElementById("slot3");
+  const slotResultMessage = document.getElementById("slot-result-message");
 
-    balance -= bet;
+  const symbols = ["🍒", "🍋", "🍇", "🍉", "⭐", "7"];
+
+  spinBtn.addEventListener("click", () => {
+    const betAmount = parseInt(document.getElementById("slot-bet-amount").value, 10);
+    if (betAmount < 2000 || betAmount > 500000 || isNaN(betAmount)) {
+      alert("Bet amount must be between 2000 and 500000 ALSilver.");
+      return;
+    }
+    if (balance < betAmount) {
+      alert("You don't have enough ALSilver to place this bet.");
+      return;
+    }
+
+    balance -= betAmount;
     updateBalanceDisplay();
 
-    const symbols = ["🍒", "🍋", "🔔", "🍇", "7️⃣"];
-    const reels = Array(3).fill(0).map(() => symbols[Math.floor(Math.random() * symbols.length)]);
+    // Spin the slots
+    const results = [
+      symbols[Math.floor(Math.random() * symbols.length)],
+      symbols[Math.floor(Math.random() * symbols.length)],
+      symbols[Math.floor(Math.random() * symbols.length)],
+    ];
 
-    const reelsContainer = document.getElementById("slot-reels");
-    reelsContainer.innerHTML = reels.map(s => `<span class="slot-reel">${s}</span>`).join("");
+    slot1.textContent = results[0];
+    slot2.textContent = results[1];
+    slot3.textContent = results[2];
 
-    if (new Set(reels).size === 1) {
-        balance += bet * 10;
-        alert("Jackpot! You win!");
+    if (results[0] === results[1] && results[1] === results[2]) {
+      slotResultMessage.textContent = "Jackpot! You win 5x your bet!";
+      balance += betAmount * 5;
+    } else if (results[0] === results[1] || results[1] === results[2] || results[0] === results[2]) {
+      slotResultMessage.textContent = "You win 2x your bet!";
+      balance += betAmount * 2;
     } else {
-        alert("Better luck next time.");
+      slotResultMessage.textContent = "You lose. Try again!";
     }
     updateBalanceDisplay();
+  });
 }
 
-// Utility Functions
-function validateBet(bet) {
-    if (isNaN(bet) || bet < 2000 || bet > 500000) {
-        alert("Bet must be between 2,000 and 500,000 ALSilver.");
-        return false;
-    }
-    if (balance < bet) {
-        alert("Insufficient balance.");
-        return false;
-    }
-    return true;
-}
+// Admin Panel Logic
+if (document.getElementById("pending-requests")) {
+  const pendingRequestsList = document.getElementById("pending-requests");
 
-function applyForSilver() {
-    const amount = parseInt(document.getElementById("applyAmount").value);
-    if (isNaN(amount) || amount <= 0) {
-        alert("Enter a valid amount.");
-        return;
-    }
-    requests.push({ id: Date.now(), amount });
-    alert("Request submitted!");
-}
+  function renderRequests() {
+    pendingRequestsList.innerHTML = "";
+    pendingRequests.forEach((req, index) => {
+      const li = document.createElement("li");
+      li.textContent = `Request ${index + 1}: ${req} ALSilver`;
+      pendingRequestsList.appendChild(li);
+    });
+  }
 
-function getCard() {
-    const suits = ["hearts", "diamonds", "clubs", "spades"];
-    const ranks = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
-    return { suit: suits[Math.floor(Math.random() * 4)], rank: ranks[Math.floor(Math.random() * 13)] };
-}
-
-function renderCards(cards, containerId) {
-    const container = document.getElementById(containerId);
-    container.innerHTML = cards.map(card => `<div class="card suit-${card.suit}">${card.rank}</div>`).join("");
-}
-
-function calculateScore(cards) {
-    return cards.reduce((sum, card) => sum + (isNaN(card.rank) ? (card.rank === "A" ? 11 : 10) : +card.rank), 0);
+  document.body.onload = renderRequests;
 }
