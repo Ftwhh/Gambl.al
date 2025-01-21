@@ -1,56 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Casino Games</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header>
-    <h1>Casino Games</h1>
-    <nav>
-      <ul>
-        <li><a href="#" class="tab" onclick="showTab('home')">Home</a></li>
-        <li><a href="#" class="tab" onclick="showTab('games')">Games</a></li>
-        <li><a href="#" class="tab" onclick="showTab('admin')">Admin</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main>
-    <!-- Home Section -->
-    <section id="home" class="tab-content active">
-      <h2>Welcome to the Casino!</h2>
-      <p>Play games, win ALSilver, and enjoy interactive animations.</p>
-    </section>
-
-    <!-- Games Section -->
-    <section id="games" class="tab-content">
-      <h2>Games</h2>
-      <div class="game-grid">
-        <div class="game-card">
-          <h3>Blackjack</h3>
-          <button onclick="startBlackjack()">Play Now</button>
-        </div>
-        <div class="game-card">
-          <h3>Slots</h3>
-          <button onclick="spinSlots()">Play Now</button>
-        </div>
-        <!-- Add more game cards if needed -->
-      </div>
-    </section>
-
-    <!-- Admin Section -->
-    <section id="admin" class="tab-content">
-      <h2>Admin Panel</h2>
-      <p>Manage ALSilver requests here.</p>
-    </section>
-  </main>
-
-  <footer>
-    <p>Copyright © 2025 Casino Games. All rights reserved.</p>
-  </footer>
-  <script src="script.js"></script>
-</body>
-</html>
+<section id="games" class="tab-content">
+  <h2>Games</h2>
+  <div class="game-grid">
+    <div class="game-card">
+      <h3>Blackjack</h3>
+      <p>Try to get as close to 21 as possible without going over!</p>
+      <button onclick="startBlackjack()">Play Now</button>
+    </div>
+    <div class="game-card">
+      <h3>Slots</h3>
+      <p>Spin the reels and match symbols to win big!</p>
+      <button onclick="spinSlots()">Play Now</button>
+    </div>
+  </div>
+</section>
