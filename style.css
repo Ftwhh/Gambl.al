@@ -1,56 +1,39 @@
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #2e3b4e;
-    color: #ffffff;
-    margin: 0;
-    padding: 0;
+  background-color: black;
+  color: gold;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
 }
 
-h1, h2 {
-    margin: 20px 0;
+header {
+  background-color: #222;
+  padding: 10px;
 }
 
-.balance {
-    font-size: 1.5em;
-    margin: 20px 0;
+nav a {
+  color: gold;
+  text-decoration: none;
+  margin: 0 15px;
 }
 
-.form-group {
-    margin: 15px 0;
+.card-container {
+  display: flex;
+  gap: 10px;
 }
 
-input, button {
-    padding: 10px;
-    font-size: 1em;
-    margin: 5px;
+.slot {
+  display: inline-block;
+  font-size: 50px;
+  margin: 0 5px;
+  animation: spin 1s ease-in-out;
 }
 
-.cards, .slot-machine {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin: 10px 0;
-}
-
-.card, .slot-reel {
-    font-size: 2em;
-    width: 60px;
-    height: 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fff;
-    color: #000;
-    border-radius: 8px;
-    border: 1px solid #000;
-}
-
-.card.suit-hearts, .card.suit-diamonds {
-    color: red;
-}
-
-footer {
-    margin-top: 30px;
-    font-size: 0.9em;
+@keyframes spin {
+  0% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
