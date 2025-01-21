@@ -1,48 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Casino Games</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header>
-    <h1>Casino Games</h1>
-    <nav>
-      <a href="#" id="home-tab" class="active">Home</a>
-      <a href="#" id="games-tab">Games</a>
-    </nav>
-  </header>
-
-  <main id="content">
-    <!-- Home Content -->
-    <section id="home-content" class="active">
-      <h2>Welcome to Casino Games</h2>
-      <p>Play games and earn ALSilver. Have fun with exciting games like Blackjack, Slots, and more!</p>
-    </section>
-
-    <!-- Games Content -->
-    <section id="games-content">
-      <div class="game-grid">
-        <div class="game-card" id="blackjack-game">
-          <h3>Blackjack</h3>
-          <p>Test your luck in Blackjack!</p>
-          <button onclick="startBlackjack()">Play Now</button>
-        </div>
-        <div class="game-card" id="slots-game">
-          <h3>Slots</h3>
-          <p>Spin the slots and win big!</p>
-          <button onclick="startSlots()">Play Now</button>
-        </div>
+<!-- Blackjack Game UI -->
+<section id="blackjack-content">
+  <h2>Blackjack</h2>
+  <div id="blackjack-table">
+    <div class="dealer">
+      <h3>Dealer</h3>
+      <div class="cards" id="dealer-cards"></div>
+      <p id="dealer-score">Score: 0</p>
+    </div>
+    <div class="players">
+      <!-- Five player seats -->
+      <div class="player" id="player-1">
+        <h3>Player 1</h3>
+        <div class="cards" id="player-1-cards"></div>
+        <p id="player-1-score">Score: 0</p>
+        <button onclick="hit(1)">Hit</button>
+        <button onclick="stand(1)">Stand</button>
       </div>
-    </section>
-  </main>
-
-  <footer>
-    <p>Copyright © 2025 Casino Games. All rights reserved.</p>
-  </footer>
-
-  <script src="app.js"></script>
-</body>
-</html>
+      <div class="player" id="player-2">
+        <h3>Player 2</h3>
+        <div class="cards" id="player-2-cards"></div>
+        <p id="player-2-score">Score: 0</p>
+        <button onclick="hit(2)">Hit</button>
+        <button onclick="stand(2)">Stand</button>
+      </div>
+      <div class="player" id="player-3">
+        <h3>Player 3</h3>
+        <div class="cards" id="player-3-cards"></div>
+        <p id="player-3-score">Score: 0</p>
+        <button onclick="hit(3)">Hit</button>
+        <button onclick="stand(3)">Stand</button>
+      </div>
+      <div class="player" id="player-4">
+        <h3>Player 4</h3>
+        <div class="cards" id="player-4-cards"></div>
+        <p id="player-4-score">Score: 0</p>
+        <button onclick="hit(4)">Hit</button>
+        <button onclick="stand(4)">Stand</button>
+      </div>
+      <div class="player" id="player-5">
+        <h3>Player 5</h3>
+        <div class="cards" id="player-5-cards"></div>
+        <p id="player-5-score">Score: 0</p>
+        <button onclick="hit(5)">Hit</button>
+        <button onclick="stand(5)">Stand</button>
+      </div>
+    </div>
+  </div>
+  <button onclick="startGame()">Start Game</button>
+</section>
